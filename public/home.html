@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>首页</title>
+	<link rel="stylesheet" href="/stylesheets/base.css">
+	<style>
+		body{
+			height: 1500px;
+			background-color: #2a2c3b;
+			font-size: 14px;
+		}
+		/*公共样式*/
+		.m-c{
+			width: 980px;
+			margin: 0 auto;
+		}
+		.head-box{
+			/*background-color: pink;*/
+			height: 30px;
+			line-height: 30px;
+			color: #BFC9CA;
+		}
+		.head-img>img{
+			height: 20px;
+		}
+		.head-ul>li{
+			margin-left: 20px;
+		}
+		.phone-App{
+			font-weight: bold;
+			color: #F5B041;
+		}
+		.zh-cn{
+			width: 20px;
+			height: 20px;
+			background: url(/images/base435d855.png) no-repeat 0 -80px;
+			margin-top: 5px;
+		}
+		.zh-us{
+			width: 20px;
+			height: 20px;
+			background: url(/images/base435d855.png) no-repeat 0 -120px;
+			margin-top: 5px;
+		}
+		.logo{
+			height: 90px;
+			background-color: #313446;
+		}
+		
+		.logo-box>img{
+			height: 80px;
+		}
+		.logo-box{
+			line-height: 90px;
+		}
+		.logo-btn1{
+			padding: 10px;
+			background-color: #fff;
+			border-radius: 3px;
+		}
+		.logo-btn2{
+			padding: 10px;
+			background-color: #F5B041;
+			border-radius: 3px;
+			color: #fff
+		}
+		.nav{
+			height: 30px;
+			line-height: 30px;
+			color: #fff;
+
+		}
+		.nav-box{
+			height: 35px;	
+			background-color: pink;
+		}
+		.nav-box li{
+			margin-left:30px;
+
+		}
+		.nav-ul>li{
+			position: relative;
+		}
+		.triangular{
+			position: absolute;
+			left: 40%;
+			top: 25px;
+			/*margin-right: 15px;*/
+			width: 0;
+			height: 0;
+			border: 5px solid transparent;
+			border-top-color: #fff;
+		}
+		.menu{
+			position: absolute;
+			left:0;
+			height: 100px;
+			background-color: #2C3E50;
+			display: none;
+			/*line-height: 100px;*/
+			/*display:block;*/
+		}
+		.lin{
+			display: inline-block;
+			width: 1px;
+			height: 80px;
+			background-color: #B2BABB;
+		}
+		.menu-ul p{
+			margin-top: -10px;
+		}
+	</style>
+	<script>
+		window.onload = function () {
+			var oMen = document.getElementsByClassName('menu')
+			var oLi = document.getElementsByClassName('nav-ul')[0].children
+			var oCiw = document.documentElement.clientWidth || document.body.clientWidth
+			// for(var i =0; i<oMen.length;i++){
+			// 	oMen[i].style.width = oCiw + 'px'
+			// }
+			for(var i=0; i<oMen.length;i++){
+				oMen[i].style.width = oCiw + 'px'
+				oMen[i].style.left = -oMen[i].parentNode.offsetLeft + 'px'
+			}
+
+			for(var i=1; i<oLi.length;i++){
+				oLi[i].onmouseenter = function(){
+					for(var i=0;i<oMen.length;i++){
+						oMen[i].style.display = 'none'
+					}
+						this.children[1].style.display = 'block'
+				}
+
+				oLi[i].onmouseleave = function(){
+						this.children[1].style.display = 'none'
+				}
+			}
+		}
+
+	</script>
+</head>
+<body>
+	<div class="head">
+		<div class="head-box m-c clearfix">
+			<span class="fl">亚洲/上海: 2018/06/14 23:52:59 (UTC +08:00)</span>
+			<ul class="fr clearfix head-ul">
+				<li class="fl head-img"><img src="/images/kscz.gif" alt=""></li>
+				<li class="fl"><a href="#" class="phone-App">手机APP下载</a></li>
+				<li class="fl">代理注册</li>
+				<li class="fl">加入收藏</li>
+				<li class="fl zh-cn"></li>
+				<li class="fl zh-us"></li>
+			</ul>
+		</div>
+	</div>
+	<div class="logo">
+		<div class="logo-box m-c clearfix">
+			<img src="/images/logo_GyiEuqR.png" alt="">
+			<div class="fr">
+				<button class="logo-btn1">登陆</button>
+				<button class="logo-btn2">免费注册</button>
+			</div>
+			
+		</div>
+	</div>
+
+	<div class="nav">
+		<div class="nav-box m-c clearfix">
+			<ul class="fl clearfix nav-ul">
+				<li class="fl">首页</li>
+				<li class="fl">真人视讯
+					<span class="triangular"></span>
+						<div class="menu">
+							<div class="menu-one m-c">
+								<ul class="clearfix menu-ul">
+									<li class="fl"><img src="/images/ag.png" alt="">
+										<p>真人视讯</p>
+									</li>
+									<li class="lin fl"></li>
+									<li class="fl"><img src="/images/ag.png" alt="">
+									<p>真人视讯</p>
+									</li>
+									<li class="lin fl"></li>
+									<li class="fl"><img src="/images/ag.png" alt="">
+									</li>
+							</div>
+						</div>
+				</li>
+				<li class="fl">电子游艺
+					<span class="triangular"></span>
+					<div class="menu">
+							<div class="menu-one m-c">
+								<ul class="clearfix menu-ul">
+									<li class="fl"><img src="/images/mg.png" alt="">
+										<p>电子游艺</p>
+									</li>
+									<li class="lin fl"></li>
+									<li class="fl"><img src="/images/mg.png" alt="">
+									<p>电子游艺</p>
+									</li>
+									<li class="lin fl"></li>
+									<li class="fl"><img src="/images/mg.png" alt="">
+										<p>电子游艺</p>
+									</li>
+							</div>
+						</div>
+				</li>
+				<li class="fl">体育赛事
+					<span class="triangular"></span>
+					<div class="menu">
+							<div class="menu-one m-c">
+								<ul class="clearfix menu-ul">
+									<li class="fl"><img src="/images/saba.png" alt="">
+										<p>体育赛事</p>
+									</li>
+									<li class="lin fl"></li>
+									<li class="fl"><img src="/images/saba.png" alt="">
+									<p>体育赛事</p>
+									</li>
+									<li class="lin fl"></li>
+									<li class="fl"><img src="/images/saba.png" alt="">
+										<p>体育赛事</p>
+									</li>
+							</div>
+						</div>
+				</li>
+				<li class="fl">彩票游戏
+					<span class="triangular"></span>
+					<div class="menu">
+							<div class="menu-one m-c">
+								<ul class="clearfix menu-ul">
+									<li class="fl"><img src="/images/saba_keno_3HBSkmL.png" alt="">
+										<p>彩票游戏</p>
+									</li>
+									<li class="lin fl"></li>
+									<li class="fl"><img src="/images/saba_keno_3HBSkmL.png" alt="">
+									<p>彩票游戏</p>
+									</li>
+									<li class="lin fl"></li>
+									<li class="fl"><img src="/images/saba_keno_3HBSkmL.png" 
+										alt="">
+										<p>彩票游戏</p>
+									</li>
+							</div>
+						</div>
+				</li>
+				<li class="fl">捕鱼
+					<span class="triangular"></span>
+					<div class="menu">
+							<div class="menu-one m-c">
+								<ul class="clearfix menu-ul">
+									<li class="fl"><img src="/images/gg.png" alt="">
+										<p>GG捕鱼</p>
+									</li>
+									<li class="lin fl"></li>
+									<li class="fl"><img src="/images/gg.png" alt="">
+									<p>GG捕鱼</p>
+									</li>
+									<li class="lin fl"></li>
+									<li class="fl"><img src="/images/gg.png" alt="">
+										<p>GG捕鱼</p>
+									</li>
+							</div>
+						</div>
+				</li>
+			</ul>
+			<ul class="fr clearfix">
+				<li class="fl"><a href="#">优惠活动</a></li>
+				<li class="fl"><a href="#">代理加盟</a></li>
+				<li class="fl"><a href="#">在线客服</a></li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>
