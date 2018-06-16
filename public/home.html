@@ -36,6 +36,7 @@
 			height: 20px;
 			background: url(/images/base435d855.png) no-repeat 0 -80px;
 			margin-top: 5px;
+
 		}
 		.zh-us{
 			width: 20px;
@@ -55,29 +56,35 @@
 			line-height: 90px;
 		}
 		.logo-btn1{
-			padding: 10px;
+			padding: 5px 10px;
 			background-color: #fff;
 			border-radius: 3px;
+			margin-right: 20px;
+			font-size: 15px;
 		}
 		.logo-btn2{
-			padding: 10px;
+			padding: 5px 10px;
 			background-color: #F5B041;
 			border-radius: 3px;
-			color: #fff
+			color: #fff;
+			font-size: 15px;
 		}
 		.nav{
-			height: 30px;
-			line-height: 30px;
+			height: 40px;
+			line-height: 40px;
 			color: #fff;
 
 		}
 		.nav-box{
 			height: 35px;	
-			background-color: pink;
+			/*background-color: pink;*/
 		}
 		.nav-box li{
 			margin-left:30px;
 
+		}
+		.nav-ul a{
+			color: #fff;
 		}
 		.nav-ul>li{
 			position: relative;
@@ -85,7 +92,7 @@
 		.triangular{
 			position: absolute;
 			left: 40%;
-			top: 25px;
+			top: 30px;
 			/*margin-right: 15px;*/
 			width: 0;
 			height: 0;
@@ -98,6 +105,7 @@
 			height: 100px;
 			background-color: #2C3E50;
 			display: none;
+			z-index: 999;
 			/*line-height: 100px;*/
 			/*display:block;*/
 		}
@@ -109,6 +117,59 @@
 		}
 		.menu-ul p{
 			margin-top: -10px;
+		}
+		.carousel{
+			position: relative;
+		}
+		.carousel-left{
+			height: 50px;
+			/*background-color: yellow;*/
+			position: absolute;
+			left: 17.7%;
+			top: 35%;
+			display: none;
+		}
+		.left{
+			font-size: 45px;
+			font-weight: bold;
+			background-color: rgba(174, 182, 191,0.3);
+			display: inline-block;
+			padding: 3px 5px;
+		}
+		.right{
+			font-size: 45px;
+			font-weight: bold;
+			background-color: rgba(174, 182, 191,0.3);
+			display: inline-block;
+			padding: 3px 5px;
+		}
+		.carousel{
+			margin-top: 10px;
+			height: 359px;
+		}
+		.carousel-ul img{
+			width: 100%;
+		}
+		.carousel-ul>li{
+			display: none;
+		}
+		.active{
+			display: block;
+		}
+		.light{
+			height: 30px;
+			line-height: 30px;
+		}
+		.light-Walking{
+			height: 30px;
+			white-space:nowrap;
+			overflow: hidden;
+			position: relative;
+		}
+		.ligth-wl{
+			color: #fff;
+			position: absolute;
+			left: 0;
 		}
 	</style>
 	<script>
@@ -136,6 +197,77 @@
 						this.children[1].style.display = 'none'
 				}
 			}
+
+			//轮播图
+			var oLBli = document.getElementsByClassName('carousel-ul')[0].children
+			var oLeft = document.getElementsByClassName('left')[0]
+			var oRight = document.getElementsByClassName('right')[0]
+			var oDiv = document.getElementsByClassName('carousel')[0]
+			var oRL = document.getElementsByClassName('carousel-left')[0]
+
+			oRight.onclick = function(){
+				right()
+			}
+
+			oLeft.onclick = function(){
+				left()
+			}
+			function right() {
+				n++
+				if(n>oLBli.length-1){
+					n=0
+				}
+			for(var i=0; i<oLBli.length; i++){
+				oLBli[i].style.display = 'none'
+			}
+				oLBli[n].style.display = 'block'
+				oLBli[n].children[0].src = '/images/0'+(n+1)+'.jpg'
+			}
+
+			function left() {
+				n--
+				if(n<0){
+					n=oLBli.length-1
+				}
+			for(var i=0; i<oLBli.length; i++){
+				oLBli[i].style.display = 'none'
+			}
+				oLBli[n].style.display = 'block'
+				oLBli[n].children[0].src = '/images/0'+(n+1)+'.jpg'
+			}
+
+			var n=0
+			var timer
+			
+			timer = setInterval(right,3000)
+
+			oDiv.onmouseenter = function(){
+				clearInterval(timer)
+				oRL.style.display = 'block'
+			}
+			oDiv.onmouseleave = function(){
+				timer = setInterval(right,1000)
+				oRL.style.display = 'none'
+			}
+
+			// 走马灯
+			;(function () {
+				var olwt = document.getElementsByClassName('light-Walking')[0]
+				var oLt = document.getElementsByClassName('ligth-wl')[0]
+			var n=0 
+			var timer
+			timer = setInterval(function(){
+				n--
+				oLt.style.left = n+ 'px'
+				if(n==-oLt.offsetWidth){
+					n=0
+					oLt.style.left=olwt.offsetWidth + 'px' 
+				}
+			},30)
+
+			})()
+			
+			
 		}
 
 	</script>
@@ -183,6 +315,7 @@
 									</li>
 									<li class="lin fl"></li>
 									<li class="fl"><img src="/images/ag.png" alt="">
+										<p>真人视讯</p>
 									</li>
 							</div>
 						</div>
@@ -272,5 +405,27 @@
 			</ul>
 		</div>
 	</div>
+
+	<div class="carousel">
+		<div class="carousel-left m-c">
+			<a href="javascript:;" class="left"><</a>
+			<a href="javascript:;" class="right fr">></a>
+		</div>
+		
+		<ul class="carousel-ul">
+			<li class="active"><img src="/images/01.jpg" alt=""></li>
+			<li><img src="" alt=""></li>
+			<li><img src="" alt=""></li>
+			<li><img src="" alt=""></li>
+			<li><img src="" alt=""></li>
+		</ul>
+	</div>
+	<!-- 走马灯 -->
+	<div class="light">
+		<div class="light-Walking m-c">
+			<div class="ligth-wl">欢迎阁下莅临【澳门威尼斯人】官方直营→无需额度转换、最具实力的品牌优势、最优质的客户服务、最快捷的存取款服务、最给力的优惠策划、最丰富的平台优势、最负责任的博彩领导者、即刻开始您的澳门威尼斯之旅吧！</div>
+</div>
+	</div>
+
 </body>
 </html>
