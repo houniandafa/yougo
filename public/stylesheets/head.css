@@ -1,0 +1,166 @@
+body{
+			height: 1500px;
+			background-color: #2a2c3b;
+			font-size: 14px;
+		}
+		/*公共样式*/
+		.m-c{
+			width: 980px;
+			margin: 0 auto;
+		}
+		.head-box{
+			/*background-color: pink;*/
+			height: 30px;
+			line-height: 30px;
+			color: #BFC9CA;
+		}
+		.head-img>img{
+			height: 20px;
+		}
+		.head-ul>li{
+			margin-left: 20px;
+		}
+		.phone-App{
+			font-weight: bold;
+			color: #F5B041;
+		}
+		.zh-cn{
+			width: 20px;
+			height: 20px;
+			background: url(/images/base435d855.png) no-repeat 0 -80px;
+			margin-top: 5px;
+
+		}
+		.zh-us{
+			width: 20px;
+			height: 20px;
+			background: url(/images/base435d855.png) no-repeat 0 -120px;
+			margin-top: 5px;
+		}
+		.logo{
+			height: 90px;
+			background-color: #313446;
+		}
+		
+		.logo-box>img{
+			height: 80px;
+		}
+		.logo-box{
+			line-height: 90px;
+		}
+		.logo-btn1{
+			padding: 5px 10px;
+			background-color: #fff;
+			border-radius: 3px;
+			margin-right: 20px;
+			font-size: 15px;
+		}
+		.logo-btn2{
+			padding: 5px 10px;
+			background-color: #F5B041;
+			border-radius: 3px;
+			color: #fff;
+			font-size: 15px;
+		}
+		.nav{
+			height: 40px;
+			line-height: 40px;
+			color: #fff;
+
+		}
+		.nav-box{
+			height: 35px;	
+			/*background-color: pink;*/
+		}
+		.nav-box li{
+			margin-left:30px;
+
+		}
+		.nav-ul a{
+			color: #fff;
+		}
+		.nav-ul>li{
+			position: relative;
+		}
+		.triangular{
+			position: absolute;
+			left: 40%;
+			top: 30px;
+			/*margin-right: 15px;*/
+			width: 0;
+			height: 0;
+			border: 5px solid transparent;
+			border-top-color: #fff;
+		}
+		.menu{
+			position: absolute;
+			left:0;
+			height: 100px;
+			background-color: #2C3E50;
+			display: none;
+			z-index: 999;
+			/*line-height: 100px;*/
+			/*display:block;*/
+		}
+		.lin{
+			display: inline-block;
+			width: 1px;
+			height: 80px;
+			background-color: #B2BABB;
+		}
+		.menu-ul p{
+			margin-top: -10px;
+		}
+		.carousel{
+			position: relative;
+		}
+		.carousel-left{
+			height: 50px;
+			/*background-color: yellow;*/
+			position: absolute;
+			left: 17.7%;
+			top: 35%;
+			display: none;
+		}
+		.left{
+			font-size: 45px;
+			font-weight: bold;
+			background-color: rgba(174, 182, 191,0.3);
+			display: inline-block;
+			padding: 3px 5px;
+		}
+		.right{
+			font-size: 45px;
+			font-weight: bold;
+			background-color: rgba(174, 182, 191,0.3);
+			display: inline-block;
+			padding: 3px 5px;
+		}
+		.carousel{
+			margin-top: 10px;
+			height: 359px;
+		}
+		.carousel-ul img{
+			width: 100%;
+		}
+		.carousel-ul>li{
+			display: none;
+		}
+		.active{
+			display: block;
+		}
+		.light{
+			height: 30px;
+			line-height: 30px;
+		}
+		.light-Walking{
+			height: 30px;
+			white-space:nowrap;
+			overflow: hidden;
+			position: relative;
+		}
+		.ligth-wl{
+			color: #fff;
+			position: absolute;
+			left: 0;
+		}
