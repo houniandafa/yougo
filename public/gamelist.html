@@ -13,7 +13,7 @@
 		}
 		.game-box{
 			background-color: #313446;
-			height: 600px;
+			/*height: 600px;*/
 			margin-top: 10px;
 			color: #fff;
 		}
@@ -48,7 +48,7 @@
 		}
 		.game-arrangement{
 			width: 770px;
-			height: 500px;
+			/*height: 500px;*/
 			/*background-color: red;*/
 			margin:0 auto;
 			margin-top: 25px;
@@ -77,6 +77,30 @@
 			line-height: 34px;
 			text-align: center;
 		}
+		.none-game {
+		display: none;
+		margin: 0 auto;
+		width: 80%;
+		padding: 15px;
+	    margin-bottom: 20px;
+	    border: 1px solid transparent;
+	    border-radius: 4px;
+		color: #31708f;
+	    background-color: #d9edf7;
+	    border-color: #bce8f1;
+	    margin-top: 20px;
+	}
+	.pagenation {
+		text-align: center;
+	}
+	.pagenation li {
+		display: inline-block;
+		cursor: pointer;
+		background: #3b3d4f;
+		padding: 4px 8px;
+		border-radius: 3px;
+
+	}
 	</style>
 	<script src="/javascripts/ajax.js"></script>
 	<script>
@@ -107,9 +131,23 @@
 			var oGameList = document.getElementsByClassName('game-list')[0].children
 			var oGameCate = document.getElementsByClassName('game-category')[0]
 			var oGameCategory=oGameCate.children
+			var oGameClothes = document.getElementById('gameClothes')
+			var oNoneGameInfo = document.getElementById('noneGameInfo')
+			var oBtnBox = document.getElementById('pagenation')
+			var aBtns = oBtnBox.children
+
+
+			var aGameTypes = []
+			var currentProviderId
+			var currentPageNum = 1
+			var totalCount
 			//游戏公司点击变色
-			var currentProviderId=7
+			
 			for(var i=0; i<oGameList.length; i++){
+				//页面刷新获取默认的 currentProviderId 值
+				if (oGameList[i].className.indexOf('active') !== -1) {
+					currentProviderId = oGameList[i].getAttribute('data-id')
+				}
 				oGameList[i].onclick = function(){
 					for(var i=0; i<oGameList.length; i++){
 						oGameList[i].className = 'fl'
@@ -117,19 +155,20 @@
 					    this.className = 'fl active'
 					    currentProviderId = this.getAttribute('data-id')
 					    console.log(currentProviderId)
-					    handleGameTypes(date)
+					    handleGameTypes(aGameTypes)
 					    
 				}
 			}
-			
+			console.log('currentProviderId')
+			console.log(currentProviderId)
 			//获取后端数据
-			var date
+			
 			ajax({
 				url:'http://b9088.com/member/gametype/?category=2&opt_expand=provider',
 				success:function(resdate){
 					console.log('success')
 				// console.log(resdate)
-					
+					var date
 					try{
 						date = JSON.parse(resdate)
 					} catch(e){
@@ -137,12 +176,14 @@
 					}
 					console.log(date)
 					date && handleGameTypes(date)
+					aGameTypes = date || []
 				},
 				error:function(status){
 					console.log(status)
 				}
 			})
 			function handleGameTypes(resArr) {
+				if (!resArr.length) {return}
 				oGameCate.innerHTML = ''
 				console.log(resArr.length)
 				var arr = []
@@ -151,24 +192,127 @@
 						arr.push(resArr[i])
 					}
 				}
+				console.log('arr')
+				console.log(arr)
+
 				for(var i=0; i<arr.length; i++){
 					var oLi = document.createElement('li')
 					oLi.innerHTML = arr[i].name
+					oLi.setAttribute('gameType-id',arr[i].id)
 					oLi.onclick = function(){
+						currenGameTypeId = this.getAttribute('gameType-id')
 						for(var i=0; i<arr.length; i++){
 							oGameCate.children[i].className = 'fl'
 						}
 						this.className = 'fl active'
+						fetchGames({
+							id:currenGameTypeId
+						})
 
+
+					}
+					if (i == 0) {
+						oLi.className = 'fl active'
+						currenGameTypeId = oLi.getAttribute('gameType-id')
+						fetchGames({
+							id:currenGameTypeId
+						})
+					}else{
+						oLi.className = 'fl'
 					}
 					oGameCate.appendChild(oLi)
 				}
 				
-				for(var i=0; i<oGameCategory.length; i++){
-						oGameCategory[i].className = 'fl'
+			}
+var data
+			function fetchGames(json) {
+				ajax({
+					url:'http://b9088.com/member/game/?platform=1&category=2&gametype='+ json.id +'&limit=16&offset='+(currentPageNum - 1)*16+'&opt_expand=1',
+					type:'get',
+				success: function (resData) {
+					var data
+					try {
+						data = JSON.parse(resData)
+						console.log('获取到的游戏们')
+						console.log(data)
+
+						handleGames(data)
+					} catch(e) {
+						// statements
+						console.log(e);
 					}
-					    oGameCategory[0].className = 'fl active'
+				},
+				error: function (status) {
+					console.log('error')
+					console.log(status)
+				}
+				})
+			}
+
+			function handleGames(arrDate) {
+				oGameClothes.innerHTML = ''
+				if (!arrDate.results.length) {
+						return oNoneGameInfo.style.display = 'block'
+				}
 				
+
+				totalCount = Math.ceil(arrDate.count / 16)
+				// console.log('totalCount')
+				// console.log(totalCount)
+
+				aBtns[5].innerHTML = '共'+totalCount+'页'
+				if (totalCount<=1) {
+					oBtnBox.style.display = 'none'
+				}else{
+					oBtnBox.style.display = 'block'
+				}
+				oNoneGameInfo.style.display = 'none'
+				for(var i=0;i<arrDate.results.length;i++){
+					var oLi = document.createElement('li')
+					oLi.innerHTML = '<img src="'+arrDate.results[i].icon+'" alt="">\
+					<p class="sand-row">'+arrDate.results[i].name+'</p>'
+					oLi.className = 'fl'
+					oGameClothes.appendChild(oLi)
+				}
+			}
+			aBtns[3].onclick = function(){
+				if(currentPageNum>=totalCount){
+					return
+				}
+				currentPageNum++
+				aBtns[2].innerHTML = '当前:'+currentPageNum+''
+				fetchGames({
+					id:currenGameTypeId
+				})
+			}
+
+			aBtns[1].onclick = function(){
+				if(currentPageNum<=1){
+					return
+				}
+				currentPageNum--
+				aBtns[2].innerHTML = '当前:'+currentPageNum+''
+				fetchGames({
+					id:currenGameTypeId
+				})
+			}
+
+			aBtns[0].onclick = function(){
+				currentPageNum = 1
+				
+				aBtns[2].innerHTML = '当前:'+currentPageNum+''
+				fetchGames({
+					id:currenGameTypeId
+				})
+			}
+
+			aBtns[4].onclick = function(){
+				currentPageNum = totalCount
+				
+				aBtns[2].innerHTML = '当前:'+currentPageNum+''
+				fetchGames({
+					id:currenGameTypeId
+				})
 			}
 			
 			
@@ -344,8 +488,8 @@
 			<li class="fl">老虎角子机</li> -->
 		</ul>
 		<div class="game-arrangement">
-			<ul class="clearfix game-clothes">
-				<li class="fl">
+			<ul class="clearfix game-clothes" id="gameClothes">
+				<!-- <li class="fl">
 					<img src="/images/SLM1.jpg" alt="">
 					<p class="sand-row">美女沙排</p>
 				</li>
@@ -368,9 +512,18 @@
 				<li class="fl">
 					<img src="/images/SLM1.jpg" alt="">
 					<p class="sand-row">美女沙排</p>
-				</li>
+				</li> -->
+			</ul>
+			<ul class="pagenation" id="pagenation">
+				<li>首页</li>
+				<li>上一页</li>
+				<li>当前:1</li>
+				<li>下一页</li>
+				<li>尾页</li>
+				<li>共6页</li>
 			</ul>
 		</div>
+		<p class="none-game" id="noneGameInfo">抱歉, 暂无该类型游戏, 请切换游戏类型</p>
 	</div>
 
 </body>
