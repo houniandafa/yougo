@@ -26,9 +26,9 @@
 		.game-list>div.active{
 			background-color: #f39800;
 		}
-		.game-list>div:hover{
+		/*.game-list>div:hover{
 			background-color: #f39800;
-		}
+		}*/
 
 		.game-category{
 			margin-top: 5px;
@@ -67,10 +67,10 @@
 			margin-top: 5px;
 			
 		}
-		.game-clothes>li:hover{
+		/*.game-clothes>li:hover{
 			border:2px solid #AEB6BF;
 		
-		}
+		}*/
 		.sand-row{
 			background: #3b3d50;
 			height: 34px;
@@ -129,31 +129,59 @@
 
 			//游戏列表
 			var oGameList = document.getElementsByClassName('game-list')[0].children
-			var oGameCate = document.getElementsByClassName('game-category')[0]
-			var oGameCategory=oGameCate.children
+			
+			
 			var oGameClothes = document.getElementById('gameClothes')
 			var oNoneGameInfo = document.getElementById('noneGameInfo')
 			var oBtnBox = document.getElementById('pagenation')
 			var aBtns = oBtnBox.children
-
-
+			var oGameCate = document.getElementsByClassName('game-category')[0]
+			var oGameCategory
 			var aGameTypes = []
-			var currentProviderId
+			var currentProviderId = localStorage.getItem('setprovider-id')
+			var oCurrentGameTypeId
 			var currentPageNum = 1
 			var totalCount
+			console.log('setprovider-id')
+			console.log(currentProviderId)
+			//鼠标移入移出变色co
+			for(var i=0; i<oGameList.length ; i++){
+				oGameList[i].onmouseenter = function(){
+					for(var j=0; j<oGameList.length; j++){
+						if (oGameList[j].getAttribute('data-id') != currentProviderId) {
+							oGameList[j].className = 'fl'
+						}
+						
+					}
+					this.className = 'fl active'
+				}
+				if (currentProviderId == oGameList[i].getAttribute('data-id')) {
+					oGameList[i].className = 'fl active'
+				}
+			}
+
+			for(var i=0; i<oGameList.length ; i++){
+				oGameList[i].onmouseleave = function(){
+						if (this.getAttribute('data-id') != currentProviderId ) {
+							this.className = 'fl'
+						}
+				}
+			}
 			//游戏公司点击变色
-			
 			for(var i=0; i<oGameList.length; i++){
 				//页面刷新获取默认的 currentProviderId 值
-				if (oGameList[i].className.indexOf('active') !== -1) {
-					currentProviderId = oGameList[i].getAttribute('data-id')
-				}
+				// if (oGameList[i].className.indexOf('active') !== -1) {
+				// 	currentProviderId = oGameList[i].getAttribute('data-id')
+				// }
 				oGameList[i].onclick = function(){
 					for(var i=0; i<oGameList.length; i++){
 						oGameList[i].className = 'fl'
 					}
 					    this.className = 'fl active'
 					    currentProviderId = this.getAttribute('data-id')
+					    currentPageNum = 1
+					    aBtns[2].innerHTML = '当前:'+currentPageNum+''
+					    	
 					    console.log(currentProviderId)
 					    handleGameTypes(aGameTypes)
 					    
@@ -200,22 +228,24 @@
 					oLi.innerHTML = arr[i].name
 					oLi.setAttribute('gameType-id',arr[i].id)
 					oLi.onclick = function(){
-						currenGameTypeId = this.getAttribute('gameType-id')
+						oCurrentGameTypeId = this.getAttribute('gameType-id')
 						for(var i=0; i<arr.length; i++){
 							oGameCate.children[i].className = 'fl'
 						}
 						this.className = 'fl active'
+						currentPageNum = 1
+					    aBtns[2].innerHTML = '当前:'+currentPageNum+''
 						fetchGames({
-							id:currenGameTypeId
+							id:oCurrentGameTypeId
 						})
 
 
 					}
 					if (i == 0) {
 						oLi.className = 'fl active'
-						currenGameTypeId = oLi.getAttribute('gameType-id')
+						oCurrentGameTypeId = oLi.getAttribute('gameType-id')
 						fetchGames({
-							id:currenGameTypeId
+							id:oCurrentGameTypeId
 						})
 					}else{
 						oLi.className = 'fl'
@@ -223,11 +253,31 @@
 					oGameCate.appendChild(oLi)
 				}
 				
+				oGameCategory=oGameCate.children
+				for(var i = 0; i<oGameCategory.length; i++){
+					oGameCategory[i].onmouseenter = function () {
+						for(var i=0; i<oGameCategory.length; i++){
+							if (oGameCategory[i].getAttribute('gameType-id') != oCurrentGameTypeId) {
+								oGameCategory[i].className = 'fl'
+							}
+						}
+							this.className = 'fl active'
+					}
+				}
+
+				for(var i = 0; i<oGameCategory.length; i++){
+					oGameCategory[i].onmouseleave = function(){
+						if (this.getAttribute('gameType-id') != oCurrentGameTypeId) {
+							this.className = 'fl'
+						}
+					}
+				}
+				
 			}
 var data
 			function fetchGames(json) {
 				ajax({
-					url:'http://b9088.com/member/game/?platform=1&category=2&gametype='+ json.id +'&limit=16&offset='+(currentPageNum - 1)*16+'&opt_expand=1',
+					url:'http://b9088.com/member/game/?platform=1&category=2&gametype='+ json.id +'&limit=16&offset='+(currentPageNum-1)*16+'&opt_expand=1',
 					type:'get',
 				success: function (resData) {
 					var data
@@ -282,7 +332,7 @@ var data
 				currentPageNum++
 				aBtns[2].innerHTML = '当前:'+currentPageNum+''
 				fetchGames({
-					id:currenGameTypeId
+					id:oCurrentGameTypeId
 				})
 			}
 
@@ -293,7 +343,7 @@ var data
 				currentPageNum--
 				aBtns[2].innerHTML = '当前:'+currentPageNum+''
 				fetchGames({
-					id:currenGameTypeId
+					id:oCurrentGameTypeId
 				})
 			}
 
@@ -302,7 +352,7 @@ var data
 				
 				aBtns[2].innerHTML = '当前:'+currentPageNum+''
 				fetchGames({
-					id:currenGameTypeId
+					id:oCurrentGameTypeId
 				})
 			}
 
@@ -311,7 +361,7 @@ var data
 				
 				aBtns[2].innerHTML = '当前:'+currentPageNum+''
 				fetchGames({
-					id:currenGameTypeId
+					id:oCurrentGameTypeId
 				})
 			}
 			
@@ -467,7 +517,7 @@ var data
 	<!-- 游戏列表 -->
 	<div class="game-box m-c">
 		<div class="game-list clearfix">
-			<div class="fl active" data-id="7">KUMA电子游艺</div>
+			<div class="fl " data-id="7">KUMA电子游艺</div>
 			<div class="fl " data-id="1">AG电子游艺</div>
 			<div class="fl" data-id="2">MG电子游艺</div>
 			<div class="fl" data-id="3">PT电子游艺</div>

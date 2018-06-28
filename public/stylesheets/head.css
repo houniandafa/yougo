@@ -164,3 +164,60 @@ body{
 			position: absolute;
 			left: 0;
 		}
+		.login-box{
+			width: 980px;
+			height: 230px;
+			background-color: #fff;
+			margin-top: 20PX;
+			font-size: 18px;
+		}
+		.login-head{
+			padding: 15px;
+			font-size: 20px;
+			font-weight: 500;
+
+		}
+		.login-ul>li{
+			text-align: center;
+			margin:15px;
+		}
+		.login-ul>.lind{
+			width: 1px;
+			height: 80px;
+			background-color: black;
+			display: inline-block;
+			margin-left: 200px;
+		}
+		.login-ul>li>input{
+			padding: 10px 30px;
+			border:1px solid black;
+		}
+		.login-but1{
+			padding: 5px 45px;
+			background-color: #456F9D;
+			color: #fff;
+		}
+		.login-but2{
+			padding: 5px 30px;
+			background-color: #456F9D;
+			color: #fff;
+		}
+		.logo-login>span{
+			padding: 5px 10px;
+			margin:5px;
+			background-color: #3498DB;
+			border-radius: 3px;
+			color: #fff;
+			font-weight: 5px;
+		}
+		.info{
+			color: red;
+			font-size: 18px;
+			display: none;
+		}
+		.logo-login1{
+			display: none;
+		}
+		.logo-login{
+			display: none;
+		}
